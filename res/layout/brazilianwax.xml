@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    xmlns:app1="http://schemas.android.com/apk/res/com.mbq.cpuguide2">
+
+    <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+        android:id="@+id/Waxtabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:background="@color/white"
+        app1:dividerColor="@color/pressed_holo_light_dab"
+        app1:indicatorColor="@color/pressed_holo_light_dab"
+        app1:textAllCaps="false"
+        app1:underlineColor="@color/white" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/Waxpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Waxtabs"
+        android:background="@color/white"
+        tools:context=".MainActivity" />
+    
+    </RelativeLayout>
