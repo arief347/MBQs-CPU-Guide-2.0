@@ -1,10 +1,10 @@
 package com.mbq.cpuguide2.Adapters.Governors;
 
-import com.mbq.cpuguide2.Governors.Definitions.BrazilianWaxDefinition;
-import com.mbq.cpuguide2.Governors.Usage.BrazilianWaxUsage;
-
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.MenuItem;
+
+import com.mbq.cpuguide2.Governors.Definitions.BrazilianWaxDefinition;
+import com.mbq.cpuguide2.Governors.Usage.BrazilianWaxUsage;
  
 public class BrazilianWaxPagerAdapter extends FragmentPagerAdapter {
 	

@@ -1,16 +1,8 @@
 package com.mbq.cpuguide2;
 
-import com.mbq.cpuguide2.MenuDrawerFragments.AndroidTips;
-import com.mbq.cpuguide2.MenuDrawerFragments.Governors;
-import com.mbq.cpuguide2.MenuDrawerFragments.IOSchedulers;
-import com.mbq.cpuguide2.MenuDrawerFragments.Preferences;
-import com.mbq.cpuguide2.MenuDrawerFragments.TCPAlgorithms;
-import com.mbq.cpuguide2.MenuDrawerFragments.Welcome;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
-
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,10 +26,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mbq.cpuguide2.BuildPropEditor.BuildPropEditor;
+import com.mbq.cpuguide2.MenuDrawerFragments.AndroidTips;
+import com.mbq.cpuguide2.MenuDrawerFragments.Governors;
+import com.mbq.cpuguide2.MenuDrawerFragments.IOSchedulers;
+import com.mbq.cpuguide2.MenuDrawerFragments.Preferences;
+import com.mbq.cpuguide2.MenuDrawerFragments.TCPAlgorithms;
+import com.mbq.cpuguide2.MenuDrawerFragments.Welcome;
+
 public class GuideActivity extends Activity {
 	Intent intent;
 	
 	Toast toast;
+	
+	private long lastPressedTime;
+	
+	private static final int PERIOD = 2000;		
    	
 	Fragment Welcome = new Welcome();
 	Fragment Governors = new Governors();
@@ -88,6 +93,12 @@ public class GuideActivity extends Activity {
 
 		}
 		    
+		com.mbq.cpuguide2.Utils.Utils.onActivityCreateSetTheme(this);
+		
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        getActionBar().setHomeButtonEnabled(true);
+		
 		setContentView(R.layout.menudrawer);
 
         mTitle = mDrawerTitle = getTitle();
@@ -143,6 +154,24 @@ public class GuideActivity extends Activity {
             selectItem(0);
         }
      } 
+	
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            switch (event.getAction()) {
+            case KeyEvent.ACTION_DOWN:
+                if (event.getDownTime() - lastPressedTime < PERIOD) {
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Press again to exit.",
+                            Toast.LENGTH_SHORT).show();
+                    lastPressedTime = event.getEventTime();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,11 +191,32 @@ public class GuideActivity extends Activity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-		switch (item.getItemId()) {		
+		switch (item.getItemId()) {	
+		
+		case R.id.buildprop_editor:
+			startActivity(new Intent(this, BuildPropEditor.class));
+			
+        case android.R.id.home:
+        	
+            Intent intent = new Intent(this, GuideActivity.class);
+            
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            
+            startActivity(intent);
+            
+		break;			
 		
 		case R.id.exit:
 			finish();
 			break;
+			
+        case R.id.Holo_Light:
+        	com.mbq.cpuguide2.Utils.Utils.changeToTheme(this, com.mbq.cpuguide2.Utils.Utils.Holo_Light);     	
+        	break;  		
+		
+        case R.id.Holo:
+        	com.mbq.cpuguide2.Utils.Utils.changeToTheme(this, com.mbq.cpuguide2.Utils.Utils.Holo);
+        	break;			
              
             default:
 

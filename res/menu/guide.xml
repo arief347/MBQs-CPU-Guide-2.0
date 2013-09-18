@@ -2,13 +2,40 @@
 
     <item
         android:id="@+id/menu_theme"
-        android:title="@string/menu_theme"/>
+        android:title="@string/menu_theme">
+        <menu>
+            
+            <item 
+                android:id="@+id/Holo_Light"
+                android:title="@string/holo_light_default_" />
+            
+            <item 
+                android:id="@+id/Holo" 
+                android:title="@string/holo" 
+                android:enabled="false"/>
+            
+        </menu>
+    </item>
     
     <item 
         android:id="@+id/exit" 
         android:title="@string/menu_exit" 
-        android:showAsAction="always|withText">
-        
+        android:showAsAction="always|withText">       
     </item>
+    
+    <group 
+        android:id="@+id/system_mods">
+        
+        <item 
+            android:id="@+id/system_mods1" 
+            android:title="@string/modifications">
+            
+            <menu>
+                <item 
+                    android:id="@+id/buildprop_editor" 
+                    android:title="@string/edit_build_prop"/>
+            </menu>
+        </item>
+    </group>
 
 </menu>
